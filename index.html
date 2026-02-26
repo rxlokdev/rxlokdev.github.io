@@ -17,13 +17,29 @@
             flex-direction: column;
         }
 
-        /* Header for top-right positioning */
+        /* Header for top-left and top-right positioning */
         header {
             width: 100%;
             padding: 20px;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between; /* Spacing between left and right */
+            align-items: center;
             box-sizing: border-box;
+        }
+
+        /* Discord Button Style */
+        .discord-link {
+            background-color: #5865F2; /* Discord Blurple */
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: opacity 0.3s ease;
+        }
+
+        .discord-link:hover {
+            opacity: 0.8;
         }
 
         /* Branding in Orange */
@@ -74,15 +90,13 @@
             background-color: #e67e00;
             transform: scale(1.05);
         }
-
-        .download-btn:active {
-            transform: scale(0.95);
-        }
     </style>
 </head>
 <body>
 
     <header>
+        <a href="https://discord.gg/C2r3TptZxE" class="discord-link" target="_blank">Discord</a>
+        
         <div class="brand">NexService</div>
     </header>
 
