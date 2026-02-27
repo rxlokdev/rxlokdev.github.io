@@ -104,7 +104,7 @@
         }
 
         /* Card Style */
-        .game-card {
+        .card {
             background-color: #1e1e1e;
             border-radius: 8px;
             border: 1px solid #333;
@@ -112,9 +112,9 @@
             transition: transform 0.3s ease;
         }
 
-        .game-card:hover { transform: translateY(-5px); }
+        .card:hover { transform: translateY(-5px); }
 
-        .game-name {
+        .item-name {
             display: block;
             padding: 15px;
             color: #ffffff;
@@ -124,7 +124,7 @@
             text-decoration-color: #ff8c00;
         }
 
-        .game-name:hover { color: #ff8c00; }
+        .item-name:hover { color: #ff8c00; }
 
         .download-btn {
             display: block;
@@ -203,29 +203,28 @@
             <div id="games" class="content-section active">
                 <h1>Game Downloads</h1>
                 <div class="button-grid">
-                    
-                    <div class="game-card">
-                        <span class="game-name" onclick="openSpecs('Minecraft', 'Win 7+', 'Intel Core i3', '4GB', 'Intel HD 4000')">Minecraft (TLauncher)</span>
+                    <div class="card">
+                        <span class="item-name" onclick="openSpecs('Minecraft', 'Win 7+', 'Intel Core i3', '4GB', 'Intel HD 4000')">Minecraft (TLauncher)</span>
                         <a href="https://dl1.tlauncher.org/f.php?f=files%2FTLauncher-Installer-1.9.5.5.exe" class="download-btn">Download</a>
                     </div>
-
-                    <div class="game-card">
-                        <span class="game-name" onclick="openSpecs('Age of Conflict', 'Win 7+', '2.0 GHz Dual Core', '2GB', 'Integrated Graphics')">Age of Conflict</span>
+                    <div class="card">
+                        <span class="item-name" onclick="openSpecs('Age of Conflict', 'Win 7+', '2.0 GHz Dual Core', '2GB', 'Integrated Graphics')">Age of Conflict</span>
                         <a href="https://store4.gofile.io/download/web/97ab2ddd-80a4-4a27-83fa-b7a7cb9e77b9/Age%20Of%20Conflict.7z" class="download-btn">Download</a>
                     </div>
-
-                    <div class="game-card">
-                        <span class="game-name" onclick="openSpecs('People Playground', 'Win 10', '2.0 GHz', '4GB', 'Integrated Graphics')">People Playground</span>
+                    <div class="card">
+                        <span class="item-name" onclick="openSpecs('People Playground', 'Win 10', '2.0 GHz', '4GB', 'Integrated Graphics')">People Playground</span>
                         <a href="https://store2.gofile.io/download/web/efe6cafc-6729-4872-9b45-212a5d1966ff/People%20Playground%20NexService.zip" class="download-btn">Download</a>
                     </div>
-
                 </div>
             </div>
 
             <div id="apps" class="content-section">
                 <h1>App Downloads</h1>
                 <div class="button-grid">
-                    <p style="color: #666; grid-column: 1/-1;">No apps added yet.</p>
+                    <div class="card">
+                        <span class="item-name" onclick="openSpecs('Adobe Premiere Pro 2025', 'Windows 11 (64-bit)', 'Intel 6th Gen / AMD Ryzen 1000', '8GB (16GB recommended)', '2GB VRAM (4GB recommended)')">Adobe Premiere Pro 2025</span>
+                        <a href="https://cold3.gofile.io/download/web/d1580a74-1afa-4681-bcd3-59cd2a3ad7cc/Premiere%20Pro%20NexService.zip" class="download-btn">Download</a>
+                    </div>
                 </div>
             </div>
 
@@ -266,13 +265,11 @@
             document.getElementById('specModal').style.display = "none";
         }
 
-        // Close modal when clicking outside of it
         window.onclick = function(event) {
             if (event.target == document.getElementById('specModal')) {
                 closeModal();
             }
         }
     </script>
-
 </body>
 </html>
