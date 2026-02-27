@@ -88,28 +88,14 @@
             text-align: center;
         }
 
-        /* Motion Blur Animation */
+        /* Motion Blur Animation for sections */
         @keyframes motionBlurIn {
-            0% {
-                filter: blur(10px);
-                transform: scale(0.95);
-                opacity: 0;
-            }
-            100% {
-                filter: blur(0);
-                transform: scale(1);
-                opacity: 1;
-            }
+            0% { filter: blur(10px); transform: scale(0.95); opacity: 0; }
+            100% { filter: blur(0); transform: scale(1); opacity: 1; }
         }
 
-        .content-section {
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
-            animation: motionBlurIn 0.4s ease-out;
-        }
+        .content-section { display: none; }
+        .content-section.active { display: block; animation: motionBlurIn 0.4s ease-out; }
 
         .button-grid {
             display: grid;
@@ -117,26 +103,87 @@
             gap: 20px;
         }
 
-        .download-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* Card Style */
+        .game-card {
             background-color: #1e1e1e;
-            color: #ff8c00;
-            padding: 20px;
-            text-decoration: none;
-            font-weight: bold;
             border-radius: 8px;
             border: 1px solid #333;
-            transition: all 0.3s ease;
+            overflow: hidden;
+            transition: transform 0.3s ease;
         }
 
-        .download-btn:hover {
+        .game-card:hover { transform: translateY(-5px); }
+
+        .game-name {
+            display: block;
+            padding: 15px;
+            color: #ffffff;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: #ff8c00;
+        }
+
+        .game-name:hover { color: #ff8c00; }
+
+        .download-btn {
+            display: block;
             background-color: #ff8c00;
             color: #121212;
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.3);
+            padding: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px;
+            border-radius: 4px;
         }
+
+        /* MODAL STYLE */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #1e1e1e;
+            margin: 15% auto;
+            padding: 30px;
+            border: 1px solid #ff8c00;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            text-align: left;
+            animation: motionBlurIn 0.3s ease-out;
+        }
+
+        .close {
+            color: #888;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover { color: #fff; }
+
+        .specs-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .specs-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .specs-list b { color: #ff8c00; }
     </style>
 </head>
 <body>
@@ -147,7 +194,6 @@
             <button class="nav-btn active" onclick="showSection('games')">Games</button>
             <button class="nav-btn" onclick="showSection('apps')">Apps</button>
         </div>
-        
         <div class="brand">NexService</div>
     </header>
 
@@ -157,38 +203,74 @@
             <div id="games" class="content-section active">
                 <h1>Game Downloads</h1>
                 <div class="button-grid">
-                    <a href="https://dl1.tlauncher.org/f.php?f=files%2FTLauncher-Installer-1.9.5.5.exe" class="download-btn">
-                        Minecraft (TLauncher)
-                    </a>
-                    <a href="https://store4.gofile.io/download/web/97ab2ddd-80a4-4a27-83fa-b7a7cb9e77b9/Age%20Of%20Conflict.7z" class="download-btn">
-                        Age of Conflict
-                    </a>
-                    <a href="https://store2.gofile.io/download/web/efe6cafc-6729-4872-9b45-212a5d1966ff/People%20Playground%20NexService.zip" class="download-btn">
-                        People Playground
-                    </a>
+                    
+                    <div class="game-card">
+                        <span class="game-name" onclick="openSpecs('Minecraft', 'Win 7+', 'Intel Core i3', '4GB', 'Intel HD 4000')">Minecraft (TLauncher)</span>
+                        <a href="https://dl1.tlauncher.org/f.php?f=files%2FTLauncher-Installer-1.9.5.5.exe" class="download-btn">Download</a>
+                    </div>
+
+                    <div class="game-card">
+                        <span class="game-name" onclick="openSpecs('Age of Conflict', 'Win 7+', '2.0 GHz Dual Core', '2GB', 'Integrated Graphics')">Age of Conflict</span>
+                        <a href="https://store4.gofile.io/download/web/97ab2ddd-80a4-4a27-83fa-b7a7cb9e77b9/Age%20Of%20Conflict.7z" class="download-btn">Download</a>
+                    </div>
+
+                    <div class="game-card">
+                        <span class="game-name" onclick="openSpecs('People Playground', 'Win 10', '2.0 GHz', '4GB', 'Integrated Graphics')">People Playground</span>
+                        <a href="https://store2.gofile.io/download/web/efe6cafc-6729-4872-9b45-212a5d1966ff/People%20Playground%20NexService.zip" class="download-btn">Download</a>
+                    </div>
+
                 </div>
             </div>
 
             <div id="apps" class="content-section">
                 <h1>App Downloads</h1>
                 <div class="button-grid">
-                    <p style="color: #666; grid-column: 1/-1;">No apps added yet. Stay tuned!</p>
+                    <p style="color: #666; grid-column: 1/-1;">No apps added yet.</p>
                 </div>
             </div>
 
         </div>
     </main>
 
+    <div id="specModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle" style="color: #ff8c00;">Minimum Specs</h2>
+            <ul class="specs-list">
+                <li><b>OS:</b> <span id="specOS"></span></li>
+                <li><b>CPU:</b> <span id="specCPU"></span></li>
+                <li><b>RAM:</b> <span id="specRAM"></span></li>
+                <li><b>GPU:</b> <span id="specGPU"></span></li>
+            </ul>
+        </div>
+    </div>
+
     <script>
         function showSection(sectionId) {
-            const sections = document.querySelectorAll('.content-section');
-            const buttons = document.querySelectorAll('.nav-btn');
-
-            sections.forEach(section => section.classList.remove('active'));
-            buttons.forEach(btn => btn.classList.remove('active'));
-
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
             event.currentTarget.classList.add('active');
+        }
+
+        function openSpecs(name, os, cpu, ram, gpu) {
+            document.getElementById('modalTitle').innerText = name + " - Minimum Specs";
+            document.getElementById('specOS').innerText = os;
+            document.getElementById('specCPU').innerText = cpu;
+            document.getElementById('specRAM').innerText = ram;
+            document.getElementById('specGPU').innerText = gpu;
+            document.getElementById('specModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('specModal').style.display = "none";
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('specModal')) {
+                closeModal();
+            }
         }
     </script>
 
