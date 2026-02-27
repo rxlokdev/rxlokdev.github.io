@@ -15,6 +15,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
         /* Header Layout */
@@ -38,7 +39,6 @@
             align-items: center;
         }
 
-        /* Navigation Buttons */
         .nav-btn {
             background: none;
             border: none;
@@ -88,19 +88,27 @@
             text-align: center;
         }
 
-        h1 {
-            margin-bottom: 40px;
-            font-weight: 300;
-            color: #ffffff;
+        /* Motion Blur Animation */
+        @keyframes motionBlurIn {
+            0% {
+                filter: blur(10px);
+                transform: scale(0.95);
+                opacity: 0;
+            }
+            100% {
+                filter: blur(0);
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
-        /* Content Sections */
         .content-section {
-            display: none; /* Hidden by default */
+            display: none;
         }
 
         .content-section.active {
-            display: block; /* Shown when active */
+            display: block;
+            animation: motionBlurIn 0.4s ease-out; /* Hier passiert die Magie */
         }
 
         .button-grid {
@@ -149,12 +157,8 @@
             <div id="games" class="content-section active">
                 <h1>Game Downloads</h1>
                 <div class="button-grid">
-                    <a href="https://store4.gofile.io/download/web/97ab2ddd-80a4-4a27-83fa-b7a7cb9e77b9/Age%20Of%20Conflict.7z" class="download-btn">
-                        Age of Conflict
-                    </a>
-                    <a href="https://store2.gofile.io/download/web/efe6cafc-6729-4872-9b45-212a5d1966ff/People%20Playground%20NexService.zip" class="download-btn">
-                        People Playground
-                    </a>
+                    <a href="https://store4.gofile.io/download/web/97ab2ddd-80a4-4a27-83fa-b7a7cb9e77b9/Age%20Of%20Conflict.7z" class="download-btn">Age of Conflict</a>
+                    <a href="https://store2.gofile.io/download/web/efe6cafc-6729-4872-9b45-212a5d1966ff/People%20Playground%20NexService.zip" class="download-btn">People Playground</a>
                 </div>
             </div>
 
@@ -170,20 +174,13 @@
 
     <script>
         function showSection(sectionId) {
-            // Hide all sections
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Deactivate all buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+            const sections = document.querySelectorAll('.content-section');
+            const buttons = document.querySelectorAll('.nav-btn');
 
-            // Show selected section
+            sections.forEach(section => section.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+
             document.getElementById(sectionId).classList.add('active');
-            
-            // Find the clicked button and activate it
             event.currentTarget.classList.add('active');
         }
     </script>
