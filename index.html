@@ -22,7 +22,6 @@
             min-height: 100vh;
         }
 
-        /* Navigation / Header */
         header {
             padding: 20px 5%;
             display: flex;
@@ -30,6 +29,9 @@
             align-items: center;
             border-bottom: 2px solid var(--primary-red);
             background: linear-gradient(to bottom, #1a0000, var(--bg-black));
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .brand {
@@ -41,7 +43,6 @@
             text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
         }
 
-        /* Sponsored Button */
         .sponsor-btn {
             background-color: transparent;
             color: #fff;
@@ -54,7 +55,7 @@
         }
 
         .sponsor-btn span {
-            color: #1DB954; /* Spotify-Grün als Akzent für Spotdown */
+            color: #1DB954;
             font-weight: bold;
         }
 
@@ -63,7 +64,6 @@
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
         }
 
-        /* Main Section */
         main {
             padding: 50px 5%;
             max-width: 1200px;
@@ -77,22 +77,21 @@
             text-transform: uppercase;
         }
 
-        /* Grid */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
         }
 
-        /* Audio Card */
         .audio-card {
             background: var(--card-gray);
             border: 1px solid #222;
             padding: 20px;
             border-radius: 12px;
-            position: relative;
-            overflow: hidden;
             transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .audio-card:hover {
@@ -101,8 +100,9 @@
         }
 
         .audio-info h3 {
-            margin: 0 0 15px 0;
-            font-size: 1.2rem;
+            margin: 0 0 10px 0;
+            font-size: 1.1rem;
+            line-height: 1.4;
         }
 
         .download-link {
@@ -117,16 +117,16 @@
             font-weight: bold;
             text-transform: uppercase;
             transition: background 0.3s ease;
+            margin-top: 15px;
         }
 
         .download-link:hover {
             background-color: var(--dark-red);
         }
 
-        /* Footer */
         footer {
             text-align: center;
-            padding: 40px;
+            padding: 60px 40px;
             color: #444;
             font-size: 0.9rem;
         }
@@ -148,24 +148,47 @@
             <div class="audio-card">
                 <div class="audio-info">
                     <h3>Scream for my ice cream</h3>
-                    <p style="color: #888; font-size: 0.9rem; margin-bottom: 20px;">Perfect for fast-paced edits / PHonk style</p>
-                    <a href="https://store-eu-gra-1.gofile.io/download/web/92ac6523-416d-43d4-9c10-464e5bc22b0f/%F0%9D%94%85%F0%9D%94%AC%F0%9D%94%AC%F0%9D%94%A1%20%F0%9D%94%AC%F0%9D%94%AB%20%F0%9D%94%B1%F0%9D%94%A5%F0%9D%94%A2%20%F0%9D%94%A1%F0%9D%94%9E%F0%9D%94%AB%F0%9D%94%A0%F0%9D%94%A2%F0%9D%94%A3%F0%9D%94%A9%F0%9D%94%AC%F0%9D%94%AC%F0%9D%94%AF%F0%9D%94%96%F0%9D%94%A0%F0%9D%94%AF%F0%9D%94%A2%F0%9D%94%9E%F0%9D%94%AA%20%F0%9D%94%A3%F0%9D%94%AC%F0%9D%94%AF%20%F0%9D%94%AA%F0%9D%94%B6%20%F0%9D%94%A6%F0%9D%94%A0%F0%9D%94%A2%F0%9D%94%A0%F0%9D%94%AF%F0%9D%94%A2%F0%9D%94%9E%F0%9D%94%AA%20(%F0%9D%94%B0%F0%9D%94%A9%F0%9D%94%AC%F0%9D%94%B4%F0%9D%94%A2%F0%9D%94%A1%2B%F0%9D%94%AF%F0%9D%94%A2%F0%9D%94%B3%F0%9D%94%A2%F0%9D%94%AF%F0%9D%94%9F).mp3" class="download-link">
-                        Download MP3
-                    </a>
+                    <p style="color: #888; font-size: 0.8rem;">Hard Phonk / High Energy</p>
                 </div>
+                <a href="https://store-eu-gra-1.gofile.io/download/web/92ac6523-416d-43d4-9c10-464e5bc22b0f/%F0%9D%94%85%F0%9D%94%AC%F0%9D%94%AC%F0%9D%94%A1%20%F0%9D%94%AC%F0%9D%94%AB%20%F0%9D%94%B1%F0%9D%94%A5%F0%9D%94%A2%20%F0%9D%94%A1%F0%9D%94%9E%F0%9D%94%AB%F0%9D%94%A0%F0%9D%94%A2%F0%9D%94%A3%F0%9D%94%A9%F0%9D%94%AC%F0%9D%94%AC%F0%9D%94%AF%F0%9D%94%96%F0%9D%94%A0%F0%9D%94%AF%F0%9D%94%A2%F0%9D%94%9E%F0%9D%94%AA%20%F0%9D%94%A3%F0%9D%94%AC%F0%9D%94%AF%20%F0%9D%94%AA%F0%9D%94%B6%20%F0%9D%94%A6%F0%9D%94%A0%F0%9D%94%A2%F0%9D%94%A0%F0%9D%94%AF%F0%9D%94%A2%F0%9D%94%9E%F0%9D%94%AA%20(%F0%9D%94%B0%F0%9D%94%A9%F0%9D%94%AC%F0%9D%94%B4%F0%9D%94%A2%F0%9D%94%A1%2B%F0%9D%94%AF%F0%9D%94%A2%F0%9D%94%B3%F0%9D%94%A2%F0%9D%94%AF%F0%9D%94%9F).mp3" class="download-link">Download</a>
             </div>
 
-            <div class="audio-card" style="opacity: 0.5; border-style: dashed;">
+            <div class="audio-card">
                 <div class="audio-info">
-                    <h3>More coming soon...</h3>
-                    <p>New sounds every week.</p>
+                    <h3>Der Mutterficker</h3>
+                    <p style="color: #888; font-size: 0.8rem;">Edit Asset / Spotdown</p>
                 </div>
+                <a href="https://store4.gofile.io/download/web/df47d22a-11f8-462a-8a0d-e5794be09d62/Der%20Mutterficker_spotdown.org.mp3" class="download-link">Download</a>
+            </div>
+
+            <div class="audio-card">
+                <div class="audio-info">
+                    <h3>Americano (Edit Version)</h3>
+                    <p style="color: #888; font-size: 0.8rem;">Hardtekk / TikTok Viral</p>
+                </div>
+                <a href="https://store10.gofile.io/download/web/c3481213-19f2-4543-9398-b8b5799eba3b/PANDEMXNIUM%20-%20HARDTEKK%20AMERICANO%20(HARDTEKK%20TikTok%20Dark%20Triad%20Viral%20Song).mp3" class="download-link">Download</a>
+            </div>
+
+            <div class="audio-card">
+                <div class="audio-info">
+                    <h3>Harte Drinks</h3>
+                    <p style="color: #888; font-size: 0.8rem;">Edit Resource / Spotdown</p>
+                </div>
+                <a href="https://store4.gofile.io/download/web/f15d700a-eeb5-4a9f-b7bb-ff1ccf9ed029/Harte%20Drinks_spotdown.org.mp3" class="download-link">Download</a>
+            </div>
+
+            <div class="audio-card">
+                <div class="audio-info">
+                    <h3>Lonley Lonley (Rampage Ver.)</h3>
+                    <p style="color: #888; font-size: 0.8rem;">Aggressive / Fast Pace</p>
+                </div>
+                <a href="https://store-eu-gra-1.gofile.io/download/web/f3d5d716-7b10-4657-97cb-0c4a14b1055e/rampage.mp3" class="download-link">Download</a>
             </div>
         </div>
     </main>
 
     <footer>
-        &copy; 2026 NexService Edit Resources. All rights reserved.
+        &copy; 2026 NexService Edit Resources | Fast & Reliable
     </footer>
 
 </body>
