@@ -3,273 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexService</title>
+    <title>NexService | Edit Resources</title>
     <style>
-        /* Base design in Dark Mode */
+        :root {
+            --primary-red: #ff0000;
+            --dark-red: #8b0000;
+            --bg-black: #0a0a0a;
+            --card-gray: #151515;
+            --text-white: #eeeeee;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background-color: #121212;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            font-family: 'Inter', 'Segoe UI', sans-serif;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
         }
 
-        /* Header Layout */
+        /* Navigation / Header */
         header {
-            width: 100%;
-            padding: 20px;
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-sizing: border-box;
-            position: sticky;
-            top: 0;
-            background-color: rgba(18, 18, 18, 0.95);
-            z-index: 1000;
-            border-bottom: 1px solid #333;
-        }
-
-        .nav-left {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .nav-btn {
-            background: none;
-            border: none;
-            color: #888;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s ease;
-            text-transform: uppercase;
-        }
-
-        .nav-btn:hover, .nav-btn.active {
-            color: #ff8c00;
-        }
-
-        .discord-link {
-            background-color: #5865F2;
-            color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            transition: opacity 0.3s ease;
+            border-bottom: 2px solid var(--primary-red);
+            background: linear-gradient(to bottom, #1a0000, var(--bg-black));
         }
 
         .brand {
-            color: #ff8c00;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary-red);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Sponsored Button */
+        .sponsor-btn {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .sponsor-btn span {
+            color: #1DB954; /* Spotify-Grün als Akzent für Spotdown */
             font-weight: bold;
-            letter-spacing: 1px;
+        }
+
+        .sponsor-btn:hover {
+            border-color: var(--primary-red);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+        }
+
+        /* Main Section */
+        main {
+            padding: 50px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            border-left: 5px solid var(--primary-red);
+            padding-left: 15px;
+            margin-bottom: 30px;
             text-transform: uppercase;
         }
 
-        /* Main content area */
-        main {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 60px 20px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 900px;
-            text-align: center;
-        }
-
-        /* Motion Blur Animation for sections */
-        @keyframes motionBlurIn {
-            0% { filter: blur(10px); transform: scale(0.95); opacity: 0; }
-            100% { filter: blur(0); transform: scale(1); opacity: 1; }
-        }
-
-        .content-section { display: none; }
-        .content-section.active { display: block; animation: motionBlurIn 0.4s ease-out; }
-
-        .button-grid {
+        /* Grid */
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
         }
 
-        /* Card Style */
-        .card {
-            background-color: #1e1e1e;
-            border-radius: 8px;
-            border: 1px solid #333;
+        /* Audio Card */
+        .audio-card {
+            background: var(--card-gray);
+            border: 1px solid #222;
+            padding: 20px;
+            border-radius: 12px;
+            position: relative;
             overflow: hidden;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
-        .card:hover { transform: translateY(-5px); }
-
-        .item-name {
-            display: block;
-            padding: 15px;
-            color: #ffffff;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: underline;
-            text-decoration-color: #ff8c00;
+        .audio-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-red);
         }
 
-        .item-name:hover { color: #ff8c00; }
+        .audio-info h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.2rem;
+        }
 
-        .download-btn {
-            display: block;
-            background-color: #ff8c00;
-            color: #121212;
-            padding: 10px;
+        .download-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-red);
+            color: white;
             text-decoration: none;
+            padding: 12px;
+            border-radius: 6px;
             font-weight: bold;
-            margin: 10px;
-            border-radius: 4px;
+            text-transform: uppercase;
+            transition: background 0.3s ease;
         }
 
-        /* MODAL STYLE */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
+        .download-link:hover {
+            background-color: var(--dark-red);
         }
 
-        .modal-content {
-            background-color: #1e1e1e;
-            margin: 15% auto;
-            padding: 30px;
-            border: 1px solid #ff8c00;
-            width: 80%;
-            max-width: 500px;
-            border-radius: 10px;
-            text-align: left;
-            animation: motionBlurIn 0.3s ease-out;
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #444;
+            font-size: 0.9rem;
         }
-
-        .close {
-            color: #888;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover { color: #fff; }
-
-        .specs-list {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
-        }
-
-        .specs-list li {
-            padding: 8px 0;
-            border-bottom: 1px solid #333;
-        }
-
-        .specs-list b { color: #ff8c00; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="nav-left">
-            <a href="https://discord.gg/C2r3TptZxE" class="discord-link" target="_blank">Discord</a>
-            <button class="nav-btn active" onclick="showSection('games')">Games</button>
-            <button class="nav-btn" onclick="showSection('apps')">Apps</button>
-        </div>
         <div class="brand">NexService</div>
+        <a href="https://spotdown.org" class="sponsor-btn" target="_blank">
+            Sponsored by <span>Spotdown</span>
+        </a>
     </header>
 
     <main>
-        <div class="container">
-            
-            <div id="games" class="content-section active">
-                <h1>Game Downloads</h1>
-                <div class="button-grid">
-                    <div class="card">
-                        <span class="item-name" onclick="openSpecs('Minecraft', 'Win 7+', 'Intel Core i3', '4GB', 'Intel HD 4000')">Minecraft (TLauncher)</span>
-                        <a href="https://dl1.tlauncher.org/f.php?f=files%2FTLauncher-Installer-1.9.5.5.exe" class="download-btn">Download</a>
-                    </div>
-                    <div class="card">
-                        <span class="item-name" onclick="openSpecs('Age of Conflict', 'Win 7+', '2.0 GHz Dual Core', '2GB', 'Integrated Graphics')">Age of Conflict</span>
-                        <a href="https://store4.gofile.io/download/web/97ab2ddd-80a4-4a27-83fa-b7a7cb9e77b9/Age%20Of%20Conflict.7z" class="download-btn">Download</a>
-                    </div>
-                    <div class="card">
-                        <span class="item-name" onclick="openSpecs('People Playground', 'Win 10', '2.0 GHz', '4GB', 'Integrated Graphics')">People Playground</span>
-                        <a href="https://download.eu-central-1.fromsmash.co/transfer/SgRszVQ-q_-dt/file/deb4a37703d9c612cdb9b96e9376ba3a993cbc5d?identity=a09bc926792f0f6f8f45214dd5f8a43b-188d089f05bf9aa33c287619b8d30c3ea1936a2576897c15658ff2c446e5c9973f05c6e6c128d59c723f9f01cab5346fc92f45dc1021b97dc76d50150e029462dc48a740f3e4145397b9771236d03306&Expires=1772544404&Key-Pair-Id=APKAIM76HR2FWFZRN3HA&Signature=hURLx7oTPF9b-F6hpVYKXmG9BCJflAbfI4-IzauNQ2Wji1q8MHlZ5uu9r8z-YlFgP8Y5hzEO15VDyg8QwqAi~AG6xk6n-wM4Gwt81o1E-naELrXS9S7nS-hAyVvtsMBl6ZXJSXUT1mGRXIVzMUk6DCnF0Y5xp3HmmNdsSWvtnuBqHB9Jpsy1jJnyU8~cCs6bDfcPuhpFwRGG8gCedv9Q6ONuSois7JJhmJRDGRkkfgt2NW2jj9m-SrcVbiJ9iqtR7kIDDFsdqG~1IZeBabWhuyrzLi5yzI1qtASEVLdHJ0IE2Pr2hvVl3QcvFkjkm7Krpmph-oK3tWGjbOnHjyRYBg__" class="download-btn">Download</a>
-                    </div>
+        <h2 class="section-title">Trending Songs & Sounds</h2>
+        
+        <div class="grid">
+            <div class="audio-card">
+                <div class="audio-info">
+                    <h3>Scream for my ice cream</h3>
+                    <p style="color: #888; font-size: 0.9rem; margin-bottom: 20px;">Perfect for fast-paced edits / PHonk style</p>
+                    <a href="https://store-eu-gra-1.gofile.io/download/web/92ac6523-416d-43d4-9c10-464e5bc22b0f/%F0%9D%94%85%F0%9D%94%AC%F0%9D%94%AC%F0%9D%94%A1%20%F0%9D%94%AC%F0%9D%94%AB%20%F0%9D%94%B1%F0%9D%94%A5%F0%9D%94%A2%20%F0%9D%94%A1%F0%9D%94%9E%F0%9D%94%AB%F0%9D%94%A0%F0%9D%94%A2%F0%9D%94%A3%F0%9D%94%A9%F0%9D%94%AC%F0%9D%94%AC%F0%9D%94%AF%F0%9D%94%96%F0%9D%94%A0%F0%9D%94%AF%F0%9D%94%A2%F0%9D%94%9E%F0%9D%94%AA%20%F0%9D%94%A3%F0%9D%94%AC%F0%9D%94%AF%20%F0%9D%94%AA%F0%9D%94%B6%20%F0%9D%94%A6%F0%9D%94%A0%F0%9D%94%A2%F0%9D%94%A0%F0%9D%94%AF%F0%9D%94%A2%F0%9D%94%9E%F0%9D%94%AA%20(%F0%9D%94%B0%F0%9D%94%A9%F0%9D%94%AC%F0%9D%94%B4%F0%9D%94%A2%F0%9D%94%A1%2B%F0%9D%94%AF%F0%9D%94%A2%F0%9D%94%B3%F0%9D%94%A2%F0%9D%94%AF%F0%9D%94%9F).mp3" class="download-link">
+                        Download MP3
+                    </a>
                 </div>
             </div>
 
-            <div id="apps" class="content-section">
-                <h1>App Downloads</h1>
-                <div class="button-grid">
-                    <div class="card">
-                        <span class="item-name" onclick="openSpecs('Adobe Premiere Pro 2025', 'Windows 11 (64-bit)', 'Intel 6th Gen / AMD Ryzen 1000', '8GB (16GB recommended)', '2GB VRAM (4GB recommended)')">Adobe Premiere Pro 2025</span>
-                        <a href="https://cold3.gofile.io/download/web/d1580a74-1afa-4681-bcd3-59cd2a3ad7cc/Premiere%20Pro%20NexService.zip" class="download-btn">Download</a>
-                    </div>
+            <div class="audio-card" style="opacity: 0.5; border-style: dashed;">
+                <div class="audio-info">
+                    <h3>More coming soon...</h3>
+                    <p>New sounds every week.</p>
                 </div>
             </div>
-
         </div>
     </main>
 
-    <div id="specModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle" style="color: #ff8c00;">Minimum Specs</h2>
-            <ul class="specs-list">
-                <li><b>OS:</b> <span id="specOS"></span></li>
-                <li><b>CPU:</b> <span id="specCPU"></span></li>
-                <li><b>RAM:</b> <span id="specRAM"></span></li>
-                <li><b>GPU:</b> <span id="specGPU"></span></li>
-            </ul>
-        </div>
-    </div>
+    <footer>
+        &copy; 2026 NexService Edit Resources. All rights reserved.
+    </footer>
 
-    <script>
-        function showSection(sectionId) {
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-
-        function openSpecs(name, os, cpu, ram, gpu) {
-            document.getElementById('modalTitle').innerText = name + " - Minimum Specs";
-            document.getElementById('specOS').innerText = os;
-            document.getElementById('specCPU').innerText = cpu;
-            document.getElementById('specRAM').innerText = ram;
-            document.getElementById('specGPU').innerText = gpu;
-            document.getElementById('specModal').style.display = "block";
-        }
-
-        function closeModal() {
-            document.getElementById('specModal').style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('specModal')) {
-                closeModal();
-            }
-        }
-    </script>
 </body>
 </html>
